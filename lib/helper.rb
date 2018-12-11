@@ -4,7 +4,7 @@ BLACK_PIECES = ["\u265A","\u265B","\u265C","\u265D","\u265E","\u265F"]
 def to_alg(arr)
   letters = ['a','b','c','d','e','f','g','h']
   letter = letters[arr[0]-1]
-  return (letter + arr[1].to_s)
+  return (letter + arr[1].to_s).to_sym
 end
 
 def to_coord(sym)
