@@ -2,7 +2,8 @@ WHITE_PIECES = ["\u2654","\u2655","\u2656","\u2657","\u2658","\u2659"]
 BLACK_PIECES = ["\u265A","\u265B","\u265C","\u265D","\u265E","\u265F"]
 
 def to_alg(arr)
-  letters = ['a','b','c','d','e','f','g','h','i']
+  #make sure to look at this. if people go off the board ie have a value of -2 it might grab something wrong
+  letters = ['a','b','c','d','e','f','g','h', nil, nil]
   letter = letters[arr[0]-1]
   return (letter + arr[1].to_s).to_sym
 end
