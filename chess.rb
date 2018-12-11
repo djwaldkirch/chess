@@ -15,6 +15,8 @@ puts "Where do you want it to go?"
 destination = gets.chomp.to_sym
 c.squares[choice] = " "
 c.squares[destination] = selected_piece.char
+selected_piece.position = destination
 c.display
 
-puts selected_piece.possible_moves
+selected_piece.get_possible_moves
+puts selected_piece.possible_moves.inspect

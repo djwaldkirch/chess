@@ -1,4 +1,5 @@
 require_relative 'pieces.rb'
+require_relative 'helper.rb'
 
 class Pawn < Piece
   attr_accessor :position, :color, :char, :possible_moves
@@ -14,12 +15,12 @@ class Pawn < Piece
   end
 
   def get_possible_moves
-    current_pos = @position.to_coord
+    current_pos = to_coord(position)
     if @color = 'white'
-      if current_pos[1] = 2
-        @possible_moves << [current_pos[0], (current_pos[1] + 2)].to_sym
+      if current_pos[1] == 2
+        @possible_moves << to_alg([current_pos[0], (current_pos[1] + 2)])
       elsif [3,4,5,6,7].include?(current_pos[1])
-        @possible_moves << [current_pos[0], (current_pos[1] + 1)].to_sym
+        @possible_moves << to_alg([current_pos[0], (current_pos[1] + 1)])
       end
     end
 
