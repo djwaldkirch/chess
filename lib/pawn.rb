@@ -14,7 +14,7 @@ class Pawn < Piece
   end
 
   def get_possible_moves(board)
-    current_pos = to_coord(position)
+    current_pos = to_coord(@position)
 
     if @color == 'white'
       #if on second rank, two moves, otherwise one

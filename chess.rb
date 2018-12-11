@@ -13,6 +13,7 @@ while game_on == true
 
   #make move
   #ask what piece you want to move
+
   puts "#{current_color.capitalize} to move."
   puts "Select a piece:"
   choice = gets.chomp.to_sym

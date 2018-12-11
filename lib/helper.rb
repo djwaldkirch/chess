@@ -2,7 +2,7 @@ WHITE_PIECES = ["\u2654","\u2655","\u2656","\u2657","\u2658","\u2659"]
 BLACK_PIECES = ["\u265A","\u265B","\u265C","\u265D","\u265E","\u265F"]
 
 def to_alg(arr)
-  letters = ['a','b','c','d','e','f','g','h']
+  letters = ['a','b','c','d','e','f','g','h','i']
   letter = letters[arr[0]-1]
   return (letter + arr[1].to_s).to_sym
 end
@@ -78,3 +78,28 @@ def valid_square?(position)
     return false
   end
 end
+
+#these don't work until i implement the get moves for every piece
+#def get_all_white_moves(board)
+#  move_list = []
+#  white_pieces = board.pieces.find_all {|piece| piece.color == 'white'}
+#  white_pieces.each do |x|
+#    x.get_possible_moves(board)
+#    x.possible_moves.each do |x|
+#      move_list << x
+#    end
+#  end
+#  return move_list
+#end
+
+#def get_all_black_moves(board)
+#  move_list = []
+#  white_pieces = board.pieces.find_all {|piece| piece.color == 'white'}
+#  white_pieces.each do |x|
+#    x.get_possible_moves(board)
+#    x.possible_moves.each do |x|
+#      move_list << x
+#    end
+#  end
+#  return move_list
+#end
