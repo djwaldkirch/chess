@@ -3,9 +3,13 @@ BLACK_PIECES = ["\u265A","\u265B","\u265C","\u265D","\u265E","\u265F"]
 
 def to_alg(arr)
   #make sure to look at this. if people go off the board ie have a value of -2 it might grab something wrong
-  letters = ['a','b','c','d','e','f','g','h', nil, nil]
-  letter = letters[arr[0]-1]
-  return (letter + arr[1].to_s).to_sym
+  unless (1..8).include?(arr[0]) && (1..8).include?(arr[1])
+    return :z9
+  else
+    letters = ['a','b','c','d','e','f','g','h']
+    letter = letters[arr[0]-1]
+    return (letter + arr[1].to_s).to_sym
+  end
 end
 
 def to_coord(sym)

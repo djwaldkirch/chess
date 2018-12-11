@@ -3,6 +3,7 @@ require_relative 'helper.rb'
 
 class Rook < Piece
   attr_accessor :position, :color, :char, :possible_moves
+
   def initialize(position, color)
     @position = position
     @color = color
@@ -14,7 +15,7 @@ class Rook < Piece
   end
 
   def get_possible_moves(board)
-    mod = [[1,0],[1,0],[-1,0],[0,-1]]
+    mod = [[1,0],[-1,0],[0,1],[0,-1]]
     #do this for each set of mods
     mod.each do |pair|
       current_pos = to_coord(@position)
