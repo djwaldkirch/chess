@@ -2,9 +2,7 @@ require_relative 'helper.rb'
 require_relative 'pieces.rb'
 
 class Board
-
   attr_accessor :squares, :pieces
-
 
   def initialize
     @pieces = []
@@ -113,13 +111,5 @@ class Board
     black_queen = Queen.new(:d8, 'black')
     @squares[:d8] = black_queen.char
     @pieces << black_queen
-
-
   end
-
-
-
-
-
-
 end

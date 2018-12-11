@@ -42,9 +42,9 @@ end
 
 def occupied_by_opponent?(board, position, color)
   if color == 'black'
-    return true if ["\u2654","\u2655","\u2656","\u2657","\u2658","\u2659"].include?(board.squares[position])
+    return true if WHITE_PIECES.include?(board.squares[position])
   elsif color == 'white'
-    return true if ["\u265A","\u265B","\u265C","\u265D","\u265E","\u265F"].include?(board.squares[position])
+    return true if BLACK_PIECES.include?(board.squares[position])
   else
     return false
   end

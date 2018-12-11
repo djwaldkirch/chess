@@ -17,6 +17,7 @@ while game_on == true
   puts "Select a piece:"
   choice = gets.chomp.to_sym
   selected_piece = b.pieces.find { |piece| piece.position == choice }
+  selected_piece.possible_moves = []
   #check if the square is valid and there is a piece there
   until valid_square?(choice) == true
     puts "Not a valid square. Please select again:"
@@ -27,13 +28,13 @@ while game_on == true
   until selected_piece != nil
     puts "No piece at that position. Please select again:"
     choice = gets.chomp.to_sym
-    selected_piece = c.pieces.find { |piece| piece.position == choice }
+    selected_piece = b.pieces.find { |piece| piece.position == choice }
   end
 
   until current_color == selected_piece.color
     puts "You have selected your opponent's piece. Please select again:"
     choice = gets.chomp.to_sym
-    selected_piece = c.pieces.find { |piece| piece.position == choice }
+    selected_piece = b.pieces.find { |piece| piece.position == choice }
   end
 
   #ask where you want to move to
@@ -48,6 +49,16 @@ while game_on == true
     destination = gets.chomp.to_sym
   end
 
+  #check if you have going to capture someone
+  if occupied_by_opponent?(b, destination, current_color) == true && occupied_by_king?(b, destination, current_color) == false
+    opponent_piece = b.pieces.find { |piece| piece.position == destination }
+    opponent_piece.position = nil
+    opponent_piece.char = " "
+    opponent_piece.color = nil
+    b.pieces.delete(opponent_piece)
+  end
+    #if so, remove that object from the board
+
   #make the move!
   b.squares[choice] = " "
   puts b.squares[choice]
@@ -55,8 +66,7 @@ while game_on == true
   selected_piece.position = destination
   b.display
 
-  #check if you have captured someone
-    #if so, remove that object from the board
+
   #check if you have promoted
   #check if you have delivered checkmate
     #if so, end the game
@@ -70,22 +80,3 @@ while game_on == true
   end
 
 end
-
-
-
-
-  #get possible moves for that piece
-
-
-
-
-
-
-
-
-
-
-
-
-selected_piece.get_possible_moves
-puts selected_piece.possible_moves.inspect
