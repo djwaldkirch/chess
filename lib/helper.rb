@@ -1,6 +1,7 @@
 WHITE_PIECES = ["\u2654","\u2655","\u2656","\u2657","\u2658","\u2659"]
 BLACK_PIECES = ["\u265A","\u265B","\u265C","\u265D","\u265E","\u265F"]
 
+#changes coordinate array to algebraic notation (symbol)
 def to_alg(arr)
   #make sure to look at this. if people go off the board ie have a value of -2 it might grab something wrong
   unless (1..8).include?(arr[0]) && (1..8).include?(arr[1])
@@ -12,6 +13,7 @@ def to_alg(arr)
   end
 end
 
+#changes algebraic notation to array of coordinates
 def to_coord(sym)
   string = sym.to_s
   string[0] = "1" if string[0] == "a"
@@ -25,6 +27,7 @@ def to_coord(sym)
   return [string[0].to_i, string[1].to_i]
 end
 
+#checks if a square is occupied by the player whose turn it is
 def occupied_by_me?(board, position, color)
   if color == 'white'
     if WHITE_PIECES.include?(board.squares[position])
@@ -43,6 +46,7 @@ def occupied_by_me?(board, position, color)
   end
 end
 
+#check if square is occupied by person whose turn it is NOT
 def occupied_by_opponent?(board, position, color)
   if color == 'black'
     return true if WHITE_PIECES.include?(board.squares[position])
@@ -53,6 +57,7 @@ def occupied_by_opponent?(board, position, color)
   end
 end
 
+#checks if square is occupied by opposing king
 def occupied_by_king?(board, position, color)
   if color == 'white'
     if (board.squares[position]) == "\u265A"
@@ -69,6 +74,7 @@ def occupied_by_king?(board, position, color)
   end
 end
 
+#makes sure any alegbraic position is within a1-h8
 def valid_square?(position)
   string = position.to_s
   if string.length == 2
@@ -82,7 +88,7 @@ def valid_square?(position)
   end
 end
 
-#these don't work until i implement the get moves for every piece
+#gets all possible moves for every piece of a given color
 def get_all_moves(board, color)
   move_list = []
   if color == 'white'
@@ -106,7 +112,7 @@ def get_all_moves(board, color)
   return move_list
 end
 
-#this is to potentially turn it off
+#checks if one color is in check
 def in_check?(board, color)
   if color == 'white'
     #get all of black's possible moves
@@ -128,7 +134,8 @@ def in_check?(board, color)
   end
 end
 
-#for trying lots of moves to get out of check
+#used to try lots of moves to see if it is possible to get out of check
+#reverse the start and destination to undo those moves
 def make_hypothetical_move(board, start, destination)
   piece = board.pieces.find {|piece| piece.position == start}
   board.squares[destination] = piece.char
@@ -171,6 +178,7 @@ def stalemated?(board, color)
   end
 end
 
+#makes sure a move does not result in check
 def moves_into_check?(board, color, start, destination)
   make_hypothetical_move(board, start, destination)
   if in_check?(board, color) == true

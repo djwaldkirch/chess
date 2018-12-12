@@ -1,4 +1,5 @@
 require_relative 'pieces.rb'
+require_relative 'helper.rb'
 
 class Knight < Piece
   attr_accessor :position, :color, :char, :possible_moves, :moves
