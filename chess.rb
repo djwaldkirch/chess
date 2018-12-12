@@ -27,12 +27,14 @@ while game_on == true
     selected_piece = b.pieces.find { |piece| piece.position == choice }
   end
 
+  #check if there is a piece object at selected position
   until selected_piece != nil
     puts "No piece at that position. Please select again:"
     choice = gets.chomp.to_sym
     selected_piece = b.pieces.find { |piece| piece.position == choice }
   end
 
+  #check if it is opponent's piece
   until current_color == selected_piece.color
     puts "You have selected your opponent's piece. Please select again:"
     choice = gets.chomp.to_sym
@@ -65,12 +67,22 @@ while game_on == true
     b.pieces.delete(opponent_piece)
   end
 
-  #make the move!
-  b.squares[choice] = " "
-  puts b.squares[choice]
-  b.squares[destination] = selected_piece.char
-  selected_piece.position = destination
-  selected_piece.moves += 1
+  #make the move! includes castling
+  if choice == :e1 && destination == :g1
+    selected_piece.castle_short(b, 'white')
+  elsif choice == :e1 && destination == :c1
+    selected_piece.castle_long(b, 'white')
+  elsif choice == :e8 && destination == :g8
+    selected_piece.castle_short(b, 'black')
+  elsif choice == :e1 && destination == :c8
+    selected_piece.castle_long(b, 'black')
+  else
+    b.squares[choice] = " "
+    puts b.squares[choice]
+    b.squares[destination] = selected_piece.char
+    selected_piece.position = destination
+    selected_piece.moves += 1
+  end
 
   #promote any pawns on the 1st or 8th rank (autopromote to queen, might add other options later)
   b.promote_pawns
