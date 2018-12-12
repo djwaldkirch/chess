@@ -18,8 +18,8 @@ class King < Piece
     mod.each do |pair|
       current_pos = to_coord(@position)
       current_pos = [(current_pos[0] + pair[0]), (current_pos[1] + pair[1])]
-      @possible_moves << to_alg(current_pos) if board.squares[to_alg(current_pos)] == " "
-      @possible_moves << to_alg(current_pos) if occupied_by_opponent?(board, to_alg(current_pos), @color)
+      @possible_moves << [@position, to_alg(current_pos)] if board.squares[to_alg(current_pos)] == " "
+      @possible_moves << [@position, to_alg(current_pos)] if occupied_by_opponent?(board, to_alg(current_pos), @color)
     end
   end
 

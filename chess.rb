@@ -9,7 +9,10 @@ game_on = true
 b = Board.new
 b.set_up_board
 b.display
+
 while game_on == true
+  opp_color = 'black' if current_color == 'white'
+  opp_color = 'white' if current_color == 'black'
 
   #make move
   #ask what piece you want to move
@@ -44,8 +47,13 @@ while game_on == true
   puts selected_piece.possible_moves.inspect
   destination = gets.chomp.to_sym
 
+  #if you're in check see if that move would get you out of check
+
+
+
+
   #see if that is in the list of possible moves
-  until selected_piece.possible_moves.include?(destination)
+  until selected_piece.possible_moves.include?([selected_piece.position, destination])
     puts "Not a valid move. Please select again:"
     destination = gets.chomp.to_sym
   end
@@ -69,9 +77,15 @@ while game_on == true
 
 
   #check if you have promoted
+
   #check if you have delivered checkmate
+
     #if so, end the game
   #check if you have delivered check
+  if in_check?(b, opp_color) == true
+    b.check = true
+    puts "Check!"
+  end
   #check for stalemate
     #if so, end the game
   #switch to other player's turn
@@ -81,3 +95,5 @@ while game_on == true
   end
 
 end
+
+puts "Game over."

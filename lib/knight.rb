@@ -18,7 +18,7 @@ class Knight < Piece
     mod.each do |pair|
       new_pos = to_alg([current_pos[0] + pair[0], current_pos[1] + pair[1]])
       if occupied_by_me?(board, new_pos, @color) == false && valid_square?(new_pos) == true
-        @possible_moves << new_pos
+        @possible_moves << [@position, new_pos]
       end
     end
   end
