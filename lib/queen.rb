@@ -2,7 +2,7 @@ require_relative 'pieces.rb'
 require_relative 'helper.rb'
 
 class Queen < Piece
-  attr_accessor :position, :color, :char, :possible_moves
+  attr_accessor :position, :color, :char, :possible_moves, :moves
   def initialize(position, color)
     @position = position
     @color = color
@@ -11,6 +11,7 @@ class Queen < Piece
     else @char = "\u265B"
     end
     @possible_moves = []
+    @moves = 0
   end
 
   def get_possible_moves(board)

@@ -113,5 +113,21 @@ class Board
     black_queen = Queen.new(:d8, 'black')
     @squares[:d8] = black_queen.char
     @pieces << black_queen
+
   end
+
+  def promote_pawns
+    pawns = @pieces.find_all {|piece| (piece.char == "\u2659" || piece.char == "\u265F")}
+    promoted = pawns.find {|pawn| pawn.position.to_s[1] == "8" || pawn.position.to_s[1] == "1"  }
+
+    if promoted != nil
+      new_queen = Queen.new(promoted.position, promoted.color)
+      @squares[promoted.position] = new_queen.char
+      @pieces << new_queen
+      promoted.position = nil
+      promoted.char = " "
+      promoted.color = nil
+    end
+  end
+
 end

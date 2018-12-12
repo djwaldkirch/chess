@@ -83,70 +83,102 @@ def valid_square?(position)
 end
 
 #these don't work until i implement the get moves for every piece
-def get_all_white_moves(board)
+def get_all_moves(board, color)
   move_list = []
-  white_pieces = board.pieces.find_all {|piece| piece.color == 'white'}
-  white_pieces.each do |x|
-    x.get_possible_moves(board)
-    x.possible_moves.each do |x|
-      move_list << x
-    end
-  end
-  return move_list
-end
-
-def get_all_black_moves(board)
-  move_list = []
-  black_pieces = board.pieces.find_all {|piece| piece.color == 'black'}
-  black_pieces.each do |x|
-    x.get_possible_moves(board)
-    x.possible_moves.each do |x|
-      move_list << x
-    end
-  end
-  return move_list
-end
-
-#this is to turn the check variable on
-def gives_check?(board, color)
   if color == 'white'
-    #get all of white's possible moves
-    moves = get_all_white_moves(board)
-    #get the position of the black king
-    king = board.pieces.find {|piece| piece.char == "\u265A"}
-    return true if moves.include?(king.position)
+    pieces = board.pieces.find_all {|piece| piece.color == 'white'}
+    pieces.each do |p|
+    p.get_possible_moves(board)
+    p.possible_moves.each do |m|
+      move_list << m
+      end
+    end
   else
-    moves = get_all_black_moves(board)
-    king = board.pieces.find {|piece| piece.char == "\u2654"}
-    return true if moves.include?(king.position)
+    pieces = board.pieces.find_all {|piece| piece.color == 'black'}
+    pieces.each do |p|
+    p.possible_moves = []
+    p.get_possible_moves(board)
+    p.possible_moves.each do |m|
+      move_list << m
+      end
+    end
   end
+  return move_list
 end
 
 #this is to potentially turn it off
 def in_check?(board, color)
   if color == 'white'
-    #get all of white's possible moves
-    moves = get_all_black_moves(board)
-    #get the position of the black king
+    #get all of black's possible moves
+    moves = get_all_moves(board, 'black')
+    #get the position of the white king
     king = board.pieces.find {|piece| piece.char == "\u2654"}
+    #for each of black moves, if the destination is where the king is, return true
     moves.each do |move|
       return true if move[1] == king.position
     end
+    return false
   else
-    moves = get_all_white_moves(board)
+    moves = get_all_moves(board, 'white')
     king = board.pieces.find {|piece| piece.char == "\u265A"}
     moves.each do |move|
       return true if move[1] == king.position
     end
+    return false
   end
 end
 
 #for trying lots of moves to get out of check
-def make_hypothetical_move(board, color, start, destination)
-  piece = board.pieces.find{|piece| piece.position == start}
+def make_hypothetical_move(board, start, destination)
+  piece = board.pieces.find {|piece| piece.position == start}
   board.squares[destination] = piece.char
   piece.position = destination
   board.squares[start] = " "
 end
 
 #does a move result in checkmate?
+def checkmated?(board, color)
+  if in_check?(board, color)
+    #get all possible moves of that color, if any of them result in not being in check, return false
+    possible_escapes = get_all_moves(board, color)
+    possible_escapes.each do |move|
+      make_hypothetical_move(board, move[0], move[1])
+      if in_check?(board, color) == false
+        make_hypothetical_move(board, move[1], move[0])
+        return false
+      else
+        make_hypothetical_move(board, move[1], move[0])
+      end
+    end
+    return true
+  end
+end
+
+#this is the same but for if you are NOT in check
+def stalemated?(board, color)
+  if in_check?(board, color) == false
+    possible_escapes = get_all_moves(board, color)
+    possible_escapes.each do |move|
+      make_hypothetical_move(board, move[0], move[1])
+      if in_check?(board, color) == false
+        make_hypothetical_move(board, move[1], move[0])
+        return false
+      else
+        make_hypothetical_move(board, move[1], move[0])
+      end
+    end
+    return true
+  end
+end
+
+def moves_into_check?(board, color, start, destination)
+  make_hypothetical_move(board, start, destination)
+  if in_check?(board, color) == true
+    make_hypothetical_move(board, destination, start)
+    return true
+  else
+    #undo it
+    make_hypothetical_move(board, destination, start)
+    return false
+  end
+end
