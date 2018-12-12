@@ -42,6 +42,7 @@ class Board
   end
 
   def set_up_board
+    #there has got to be a better way to do this
     white_pawns = [:a2, :b2, :c2, :d2, :e2, :f2, :g2, :h2]
     white_pawns.each do |x|
       pawn = Pawn.new(x, 'white')

@@ -3,6 +3,7 @@ require_relative 'helper.rb'
 
 class Bishop
   attr_accessor :position, :color, :char, :possible_moves, :moves
+
   def initialize(position, color)
     @position = position
     @color = color

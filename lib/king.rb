@@ -24,7 +24,7 @@ class King < Piece
       @possible_moves << [@position, to_alg(current_pos)] if occupied_by_opponent?(board, to_alg(current_pos), @color)
     end
 
-    #castling
+    #castling. this is terrible.
     if @position == :e1 && @moves == 0
       h1_piece = board.pieces.find{ |piece| piece.position == :h1}
       a1_piece = board.pieces.find{ |piece| piece.position == :a1}

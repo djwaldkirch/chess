@@ -13,11 +13,13 @@ while game_on == true
   opp_color = 'black' if current_color == 'white'
   opp_color = 'white' if current_color == 'black'
 
-  #ask what piece you want to move
+  #gets what piece you want to move
   puts "#{current_color.capitalize} to move."
   puts "Select a piece:"
   choice = gets.chomp.to_sym
   selected_piece = b.pieces.find { |piece| piece.position == choice }
+
+  #resets the possible moves for the piece
   selected_piece.possible_moves = []
 
   #check if the square is valid and there is a piece there
